@@ -1,0 +1,90 @@
+CREATE TABLE IF NOT EXISTS "schema_migrations" (version varchar(255) primary key);
+CREATE TABLE users (
+	id	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  name	VARCHAR(45),
+  user	VARCHAR(45) NOT NULL,
+  password	VARCHAR(45) NOT NULL,
+	email	VARCHAR(45) NOT NULL,
+  image_url VARCHAR(100) NOT NULL
+, district_id INTEGER
+REFERENCES districts(id) ON UPDATE CASCADE ON DELETE CASCADE);
+CREATE TABLE sqlite_sequence(name,seq);
+CREATE TABLE generations (
+	id	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  name	VARCHAR(20)
+);
+CREATE TABLE pokemons (
+	id	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  name	VARCHAR(45),
+  number	INTEGER NOT NULL,
+  weight	FLOAT NOT NULL,
+	height	FLOAT NOT NULL,
+  image_url VARCHAR(100) NOT NULL,
+  generation_id	INTEGER NOT NULL,
+  FOREIGN KEY (generation_id) REFERENCES generations (id)
+);
+CREATE TABLE users_pokemons (
+	id	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  user_id	INTEGER NOT NULL,
+  pokemon_id	INTEGER NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users (id),
+  FOREIGN KEY (pokemon_id) REFERENCES pokemons (id)
+);
+CREATE TABLE users_followers (
+	id	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  user_id	INTEGER NOT NULL,
+  follower_id	INTEGER NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users (id),
+  FOREIGN KEY (follower_id) REFERENCES users (id)
+);
+CREATE TABLE pokemon_types (
+	id	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  name	VARCHAR(25)
+);
+CREATE TABLE pokemons_pokemon_types (
+	id	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  pokemon_id	INTEGER NOT NULL,
+  pokemon_type_id	INTEGER NOT NULL,
+  FOREIGN KEY (pokemon_id) REFERENCES pokemons (id),
+  FOREIGN KEY (pokemon_type_id) REFERENCES users (id)
+);
+CREATE TABLE departments (
+	id	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  name	VARCHAR(45)
+);
+CREATE TABLE provinces (
+	id	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  name	VARCHAR(45),
+  department_id	INTEGER NOT NULL,
+  FOREIGN KEY (department_id) REFERENCES departaments (id)
+);
+CREATE TABLE districts (
+	id	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  name	VARCHAR(45),
+  province_id	INTEGER NOT NULL,
+  FOREIGN KEY (province_id) REFERENCES provinces (id)
+);
+-- Dbmate schema migrations
+INSERT INTO "schema_migrations" (version) VALUES
+  ('20230314232509'),
+  ('20230314233056'),
+  ('20230323163017'),
+  ('20230323163022'),
+  ('20230323163148'),
+  ('20230323163442'),
+  ('20230608011523'),
+  ('20230608011531'),
+  ('20230608011918'),
+  ('20230608011925'),
+  ('20230615212933'),
+  ('20230615212940'),
+  ('20230615213000'),
+  ('20230615213005'),
+  ('20230703215706'),
+  ('20230703215712'),
+  ('20230703215723'),
+  ('20230703215727'),
+  ('20230703215733'),
+  ('20230703215755'),
+  ('20230703220532'),
+  ('20230703220541');

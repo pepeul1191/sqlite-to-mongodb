@@ -1,0 +1,21 @@
+[
+	{"id": 1, "name": "PLANTA"},
+	{"id": 2, "name": "VENENO"},
+	{"id": 3, "name": "FUEGO"},
+	{"id": 4, "name": "NINGUNO"},
+	{"id": 5, "name": "VOLADOR"},
+	{"id": 6, "name": "AGUA"},
+	{"id": 7, "name": "BICHO"},
+	{"id": 8, "name": "NORMAL"},
+	{"id": 9, "name": "ELÉCTRICO"},
+	{"id": 10, "name": "TIERRA"},
+	{"id": 11, "name": "HADA"},
+	{"id": 12, "name": "LUCHA"},
+	{"id": 13, "name": "PSÍQUICO"},
+	{"id": 14, "name": "ROCA"},
+	{"id": 15, "name": "ACERO"},
+	{"id": 16, "name": "HIELO"},
+	{"id": 17, "name": "FANTASMA"},
+	{"id": 18, "name": "DRAGÓN"},
+	{"id": 19, "name": "SINIESTRO"}
+]
