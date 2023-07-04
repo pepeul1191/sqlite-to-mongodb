@@ -53,10 +53,11 @@ def pokemons_documents():
     doc['generation_id'] = generation_id['_id']
     # types
     pokemons_types_ids = db.pokemon_types.find({'id': {'$in': pokemons_types_ids}}, {'_id': 1})
-    doc['pokemon_types'] = list(pokemons_types_ids)
-  db['pokemons'].insert_many(pokemons)
+    doc['pokemon_types'] = [item['_id'] for item in list(pokemons_types_ids)]
+    # insert one by one
+    db.pokemons.insert_one(doc)
 
-# generations_documents()
-# pokemon_types_documents()
-# locations_documents()
-# pokemons_documents()
+#generations_documents()
+#pokemon_types_documents()
+#locations_documents()
+pokemons_documents()

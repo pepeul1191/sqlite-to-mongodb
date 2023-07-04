@@ -29,5 +29,46 @@ db.pokemon_types.drop()
 db.locations.deleteMany({})
 // find in array
 db.pokemon_types.find({ id: { $in: ['1', '2'] } })
+// joins?
+db.pokemons.aggregate([
+  {
+    $lookup: {
+      from: "generations",
+      localField: "generation_id",
+      foreignField: "_id",
+      as: "generation"
+    }
+  },
+  {
+    $project: {
+      "id: 0,
+      "generation_id": 0
+    }
+  },
+  {
+    $addFields: {
+      generation: { $arrayElemAt: ["$generation", 0] }
+    }
+  },
+  {
+    $unwind: "$pokemon_types"
+  },
+  {
+    $lookup: {
+      from: "pokemon_types",
+      localField: "pokemon_types",
+      foreignField: "_id",
+      as: "pokemon_types"
+    }
+  },
+  {
+    $addFields: {
+      pokemon_types: { $arrayElemAt: ["$pokemon_types", 0] }
+    }
+  },
+
+])
+
+
 ```
 
