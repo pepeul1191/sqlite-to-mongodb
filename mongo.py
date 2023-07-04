@@ -24,13 +24,13 @@ def locations_documents():
   for doc in departments:
     doc['type'] = 'department'
     doc['parent'] = None # null
-  #db['locations'].insert_many(departments)
+  db['locations'].insert_many(departments)
   # provinces
   for doc in provinces:
     doc['type'] = 'province'
     department_id = db.locations.find_one({'id': doc['department_id'], 'type': 'department'}, {'_id': 1})['_id']
     doc['parent'] = department_id
-  #db['locations'].insert_many(provinces)
+  db['locations'].insert_many(provinces)
   # districts
   for doc in districts:
     doc['type'] = 'district'
@@ -40,5 +40,23 @@ def locations_documents():
   # delete id field -> javascript code, no python
   # db.locations.updateMany({}, { $unset: { id: "" } })
 
+def pokemons_documents():
+  pokemons = csv_to_dictionary_list('csvs/pokemons.csv')
+  pokemons_pokemon_types = csv_to_dictionary_list('csvs/pokemons_pokemon_types.csv')
+  db = get_connection()
+  # pokemons
+  for doc in pokemons:
+    pokemons_types = [item for item in pokemons_pokemon_types if item['pokemon_id'] == doc['id']]
+    pokemons_types_ids = [item['pokemon_type_id'] for item in pokemons_types]
+    # generation_id
+    generation_id = db.generations.find_one({'id': doc['generation_id']}, {'_id': 1})
+    doc['generation_id'] = generation_id['_id']
+    # types
+    pokemons_types_ids = db.pokemon_types.find({'id': {'$in': pokemons_types_ids}}, {'_id': 1})
+    doc['pokemon_types'] = list(pokemons_types_ids)
+  db['pokemons'].insert_many(pokemons)
+
+# generations_documents()
 # pokemon_types_documents()
-locations_documents()
+# locations_documents()
+# pokemons_documents()

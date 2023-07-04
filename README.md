@@ -25,6 +25,9 @@ db.pokemon_types.insertMany([
 db.locations.find({'type': 'department'}).count()
 // borrar colección
 db.pokemon_types.drop()
-
+// borrar documentos - todos
+db.locations.deleteMany({})
+// find in array
+db.pokemon_types.find({ id: { $in: ['1', '2'] } })
 ```
 
